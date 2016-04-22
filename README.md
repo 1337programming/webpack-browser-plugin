@@ -1,7 +1,6 @@
 [![npm version](https://badge.fury.io/js/webpack-browser-plugin.svg)](https://badge.fury.io/js/webpack-browser-plugin)
 ![](https://reposs.herokuapp.com/?path=1337programming/webpack-browser-plugin)
 [![npm](https://img.shields.io/npm/dm/webpack-browser-plugin.svg)]()
-# Work In Progress!!
 # Webpack Browser Plugin
 
 This plugin enables your webpack builds to automatically launch it's application on a browser.
@@ -64,9 +63,9 @@ var config = {
 module.exports = config;
 ```
 
-Note: For `webpack` browser-sync is being used, webpack-dev-server is just using a child process.
-Also ports get overwritten if specified in webpack.config.js for webpack-dev-server
+Note: For `webpack`, `browser-sync` is being used. For `webpack-dev-server` a child process spawns the browser popup.
+Also ports get overwritten if specified in webpack.config.js for webpack-dev-server.
 
 ### API
-* `port`: Port to run on **Default: 8080 <number>**
+* `port`: Port to run on. **Default: 8080 <number>**
 * `browser`: Browser to use. **Default: default <string|array>**
