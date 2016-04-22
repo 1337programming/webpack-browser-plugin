@@ -1,6 +1,7 @@
 [![npm version](https://badge.fury.io/js/webpack-browser-plugin.svg)](https://badge.fury.io/js/webpack-browser-plugin)
 ![](https://reposs.herokuapp.com/?path=1337programming/webpack-browser-plugin)
 [![npm](https://img.shields.io/npm/dm/webpack-browser-plugin.svg)]()
+# Work In Progress!!
 # Webpack Browser Plugin
 
 This plugin enables your webpack builds to automatically launch it's application on a browser.

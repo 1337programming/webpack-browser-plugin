@@ -14,7 +14,11 @@ export default class WebpackShellPlugin {
       port: 8080,
       browser: 'default'
     };
-    this.options = mergeOptions(options, defaultOptions);
+    if (options) {
+      this.options = mergeOptions(options, defaultOptions);
+    } else {
+      this.options = defaultOptions;
+    }
   }
 
   apply(compiler) {
@@ -24,7 +28,7 @@ export default class WebpackShellPlugin {
       this.options.port = compiler.options.devServer.port;
     }
 
-    compiler.plugin('done', (compilation, callback) => {
+    compiler.plugin('emit', (compilation, callback) => {
       if (compilation.compiler._plugins['watch-run']) {
         // Running in dev-server @todo check and validate this
         const open = require('open');
