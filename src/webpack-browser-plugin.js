@@ -28,15 +28,11 @@ export default class WebpackShellPlugin {
       this.options.port = compiler.options.devServer.port;
     }
 
-    compiler.plugin('emit', (compilation, callback) => {
-      if (compilation.compiler._plugins['watch-run']) {
+    compiler.plugin('done', (compilation) => {
+      if (compilation.compilation.compiler._plugins['watch-run']) {
         // Running in dev-server @todo check and validate this
         const open = require('open');
-        if (this.options.browser !== 'default') {
-          open(`http://127.0.0.1:${this.options.port.toString()}/`);
-        } else {
-          open(`http://127.0.0.1:${this.options.port.toString()}/`, this.options.browser);
-        }
+        open(`http://127.0.0.1:${this.options.port.toString()}/`);
       } else {
         const browserSync = require('browser-sync');
         browserSync.init({
@@ -47,7 +43,6 @@ export default class WebpackShellPlugin {
           }
         });
       }
-      callback();
     });
   }
 }
