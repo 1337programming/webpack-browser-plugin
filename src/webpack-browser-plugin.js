@@ -1,9 +1,4 @@
-interface Defaults {
-  port:number;
-  browser:string
-}
-
-function mergeOptions(options:any, defaults:Defaults) {
+function mergeOptions(options, defaults) {
   for (var key in defaults) {
     if (options.hasOwnProperty(key)) {
       defaults[key] = options[key];
@@ -12,24 +7,24 @@ function mergeOptions(options:any, defaults:Defaults) {
   return defaults;
 }
 
-export class WebpackShellPlugin {
+export default class WebpackShellPlugin {
 
-  constructor(private options:any) {
-    const defaultOptions:Defaults = {
+  constructor(options) {
+    const defaultOptions = {
       port: 8080,
       browser: 'default'
     };
     this.options = mergeOptions(options, defaultOptions);
   }
 
-  apply(compiler:any) {
+  apply(compiler) {
     if (compiler.options.port) {
       this.options.port = compiler.options.port;
     } else if (compiler.options.devServer.port) {
       this.options.port = compiler.options.devServer.port;
     }
 
-    compiler.plugin('done', (compilation:any, callback:Function) => {
+    compiler.plugin('done', (compilation, callback) => {
       if (compilation.compiler._plugins['watch-run']) {
         // Running in dev-server @todo check and validate this
         const open = require('open');

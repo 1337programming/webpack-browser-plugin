@@ -1,10 +1,10 @@
-import typescript from 'rollup-plugin-typescript';
+import babel from 'rollup-plugin-babel';
 
 export default {
-  entry: 'src/webpack-browser-plugin.ts',
+  entry: 'src/webpack-browser-plugin.js',
   format: 'cjs',
   plugins: [
-    typescript()
+    babel()
   ],
   dest: 'lib/index.js'
 };
