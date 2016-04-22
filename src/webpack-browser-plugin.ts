@@ -1,6 +1,6 @@
 interface Defaults {
-  port: number;
-  browser: string
+  port:number;
+  browser:string
 }
 
 function mergeOptions(options:any, defaults:Defaults) {
@@ -29,7 +29,7 @@ export class WebpackShellPlugin {
       this.options.port = compiler.options.devServer.port;
     }
 
-    compiler.plugin('done', (compilation:any, callback: Function) => {
+    compiler.plugin('done', (compilation:any, callback:Function) => {
       if (compilation.compiler._plugins['watch-run']) {
         // Running in dev-server @todo check and validate this
         const open = require('open');
