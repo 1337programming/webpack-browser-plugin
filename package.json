@@ -1,0 +1,36 @@
+{
+  "name": "webpack-browser-plugin",
+  "version": "1.0.0",
+  "description": "Launch a browser after webpack-dev-server completes building",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1337programming/webpack-browser-plugin.git"
+  },
+  "author": "Patrick Opie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1337programming/webpack-browser-plugin/issues"
+  },
+  "homepage": "https://github.com/1337programming/webpack-browser-plugin",
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "rollup": "^0.25.8",
+    "rollup-plugin-typescript": "^0.7.3",
+    "ts-helpers": "1.1.0",
+    "ts-node": "^0.7.1",
+    "tslint": "^3.7.1",
+    "tslint-loader": "^2.1.3",
+    "typedoc": "^0.3.12",
+    "typescript": "~1.8.9",
+    "typings": "^0.7.12"
+  },
+  "dependencies": {
+    "browser-sync": "^2.12.3",
+    "open": "0.0.5"
+  }
+}
