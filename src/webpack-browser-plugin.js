@@ -19,6 +19,7 @@ export default class WebpackShellPlugin {
     } else {
       this.options = defaultOptions;
     }
+    this.firstRun = true;
   }
 
   apply(compiler) {
@@ -29,19 +30,22 @@ export default class WebpackShellPlugin {
     }
 
     compiler.plugin('done', (compilation) => {
-      if (compilation.compilation.compiler._plugins['watch-run']) {
-        // Running in dev-server @todo check and validate this
-        const open = require('open');
-        open(`http://127.0.0.1:${this.options.port.toString()}/`);
-      } else {
-        const browserSync = require('browser-sync');
-        browserSync.init({
-          server: {
-            baseDir: compilation.options.output.path,
-            browser: this.options.browser,
-            port: this.options.port
-          }
-        });
+      if (this.firstRun) {
+        if (compilation.compilation.compiler._plugins['watch-run']) {
+          // Running in dev-server @todo check and validate this
+          const open = require('open');
+          open(`http://127.0.0.1:${this.options.port.toString()}/`);
+        } else {
+          const browserSync = require('browser-sync');
+          browserSync.init({
+            server: {
+              baseDir: compilation.options.output.path,
+              browser: this.options.browser,
+              port: this.options.port
+            }
+          });
+        }
+        this.firstRun = false;
       }
     });
   }
