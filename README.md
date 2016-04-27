@@ -66,6 +66,8 @@ module.exports = config;
 Note: For `webpack`, `browser-sync` is being used. For `webpack-dev-server` a child process spawns the browser popup.
 Also ports get overwritten if specified in webpack.config.js for webpack-dev-server.
 
+Also checkout our other webpack plugin [WebpackShellPlugin](https://github.com/1337programming/webpack-shell-plugin).
+
 ### API
 * `port`: Port to run on. **Default: 8080 <number>**
 * `browser`: Browser to use. **Default: default <string|array>**
