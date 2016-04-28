@@ -20,6 +20,8 @@ export default class WebpackShellPlugin {
       this.options = defaultOptions;
     }
     this.firstRun = true;
+    this.dev = null;
+    this.outputPath = null;
   }
 
   apply(compiler) {
@@ -31,21 +33,32 @@ export default class WebpackShellPlugin {
       }
     }
 
+    compiler.plugin('compilation', (compilation) => {
+      if (compilation.compiler._plugins['watch-run']) {
+        this.dev = true;
+      } else {
+        this.dev = false;
+        this.outputPath = compilation.compiler.outputPath;
+      }
+    });
+
     compiler.plugin('done', (compilation) => {
       if (this.firstRun) {
-        if (compilation.compilation.compiler._plugins['watch-run']) {
+        if (this.dev === true) {
           // Running in dev-server @todo check and validate this
           const open = require('open');
           open(`http://127.0.0.1:${this.options.port.toString()}/`);
-        } else {
+        } else if (this.dev === false) {
           const browserSync = require('browser-sync');
           browserSync.init({
             server: {
-              baseDir: compilation.options.output.path,
-              browser: this.options.browser,
-              port: this.options.port
-            }
+              baseDir: this.outputPath
+            },
+            browser: this.options.browser,
+            port: this.options.port
           });
+        } else {
+          console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');
         }
         this.firstRun = false;
       }
