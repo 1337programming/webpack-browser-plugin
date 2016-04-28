@@ -25,8 +25,10 @@ export default class WebpackShellPlugin {
   apply(compiler) {
     if (compiler.options.port) {
       this.options.port = compiler.options.port;
-    } else if (compiler.options.devServer.port) {
-      this.options.port = compiler.options.devServer.port;
+    } else if (compiler.options.devServer) {
+      if (compiler.options.devServer.port) {
+        this.options.port = compiler.options.devServer.port;
+      }
     }
 
     compiler.plugin('done', (compilation) => {
