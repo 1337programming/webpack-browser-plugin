@@ -12,7 +12,8 @@ export default class WebpackShellPlugin {
   constructor(options) {
     const defaultOptions = {
       port: 8080,
-      browser: 'default'
+      browser: 'default',
+      url: 'http://127.0.0.1'
     };
     if (options) {
       this.options = mergeOptions(options, defaultOptions);
@@ -47,7 +48,7 @@ export default class WebpackShellPlugin {
         if (this.dev === true) {
           // Running in dev-server @todo check and validate this
           const open = require('open');
-          open(`http://127.0.0.1:${this.options.port.toString()}/`);
+          open(`${this.options.url}:${this.options.port.toString()}/`);
         } else if (this.dev === false) {
           const browserSync = require('browser-sync');
           browserSync.init({
@@ -55,7 +56,8 @@ export default class WebpackShellPlugin {
               baseDir: this.outputPath
             },
             browser: this.options.browser,
-            port: this.options.port
+            port: this.options.port,
+            url: this.options.url
           });
         } else {
           console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');
