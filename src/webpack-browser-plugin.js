@@ -56,8 +56,7 @@ export default class WebpackShellPlugin {
               baseDir: this.outputPath
             },
             browser: this.options.browser,
-            port: this.options.port,
-            url: this.options.url
+            port: this.options.port
           });
         } else {
           console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');
