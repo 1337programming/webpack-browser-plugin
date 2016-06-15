@@ -47,7 +47,7 @@ export default class WebpackShellPlugin {
         if (this.dev === true) {
           // Running in dev-server @todo check and validate this
           const open = require('open');
-          open(`http://127.0.0.1:${this.options.port.toString()}/`);
+          open(`http://127.0.0.1:${this.options.port.toString()}/`, this.options.browser);
         } else if (this.dev === false) {
           const browserSync = require('browser-sync');
           browserSync.init({
