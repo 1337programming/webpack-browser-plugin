@@ -7,7 +7,7 @@ function mergeOptions(options, defaults) {
   return defaults;
 }
 
-export default class WebpackShellPlugin {
+export default class WebpackBrowserPlugin {
 
   constructor(options) {
     const defaultOptions = {
