@@ -12,7 +12,8 @@ export default class WebpackBrowserPlugin {
   constructor(options) {
     const defaultOptions = {
       port: 8080,
-      browser: 'default'
+      browser: 'default',
+      url: 'http://127.0.0.1'
     };
     if (options) {
       this.options = mergeOptions(options, defaultOptions);
@@ -50,26 +51,29 @@ export default class WebpackBrowserPlugin {
       if (this.firstRun) {
         if (this.dev === true) {
           var spawn = require('child_process').spawn;
-          spawn('open', [`http://127.0.01:${this.options.port.toString()}`]);
+          var url = this.options.url;
+          if (this.options.port) {
+            url = `${this.options.url}:${this.options.port.toString()}`;
+          }
+          spawn('open', [url]);
         } else if (this.dev === false) {
           const bs = require('browser-sync').create();
 
           if (this.watch) {
-            bs.watch('*.js').on('change', bs.reload);
+            bs.watch(this.outputPath + '/**/*.js', (event, file) => {
+              if (event === "change") {
+                bs.reload();
+              }
+            });
           }
-
-          bs.watch(_this.outputPath + '/**/*.js', (event, file) => {
-            if (event === "change") {
-              bs.reload();
-            }
-          });
 
           bs.init({
             server: {
               baseDir: this.outputPath
             },
             browser: this.options.browser,
-            port: this.options.port
+            port: this.options.port,
+            open: "external"
           });
         } else {
           console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');

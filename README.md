@@ -40,7 +40,8 @@ var plugins = [];
 
 plugins.push(new WebpackBrowserPlugin({
   browser: 'Firefox',
-  port: 9000
+  port: 9000,
+  url: 'http://192.168.3.1'
 }));
 
 var config = {
@@ -75,3 +76,4 @@ Also checkout our other webpack plugin [WebpackShellPlugin](https://github.com/1
 ### API
 * `port`: Port to run on. **Default: 8080 <number>**
 * `browser`: Browser to use. Note: webpack-dev-server will open your default browser. **Default: default <string|array>**
+* `url`: Url to use. **Default: http://127.0.0.1 or http://localhost <string>**
