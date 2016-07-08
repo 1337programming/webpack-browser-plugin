@@ -4,6 +4,7 @@ const webpack = require('webpack');
 var WebpackBrowserPlugin = require('./lib');
 
 module.exports = {
+  watch: true,
   entry: path.resolve(__dirname, 'test/entry.js'),
   output: {
     path: path.resolve(__dirname, 'test'),
