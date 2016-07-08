@@ -50,6 +50,9 @@ var config = {
   output: {
     path: __dirname + 'dest'
   },
+  devServer: {
+    contentBase: __dirname + 'dest'
+  },
   plugins: plugins,
   module: {
     loaders: [
@@ -71,4 +74,4 @@ Also checkout our other webpack plugin [WebpackShellPlugin](https://github.com/1
 
 ### API
 * `port`: Port to run on. **Default: 8080 <number>**
-* `browser`: Browser to use. **Default: default <string|array>**
+* `browser`: Browser to use. Note: webpack-dev-server will open your default browser. **Default: default <string|array>**

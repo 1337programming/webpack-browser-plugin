@@ -20,6 +20,7 @@ export default class WebpackBrowserPlugin {
       this.options = defaultOptions;
     }
     this.firstRun = true;
+    this.watch = false;
     this.dev = null;
     this.outputPath = null;
   }
@@ -34,6 +35,9 @@ export default class WebpackBrowserPlugin {
     }
 
     compiler.plugin('compilation', (compilation) => {
+      if (compilation.options.watch) {
+        this.watch = true;
+      }
       if (compilation.compiler._plugins['watch-run']) {
         this.dev = true;
       } else {
@@ -45,12 +49,22 @@ export default class WebpackBrowserPlugin {
     compiler.plugin('done', (compilation) => {
       if (this.firstRun) {
         if (this.dev === true) {
-          // Running in dev-server @todo check and validate this
-          const open = require('open');
-          open(`http://127.0.0.1:${this.options.port.toString()}/`, this.options.browser);
+          var spawn = require('child_process').spawn;
+          spawn('open', [`http://127.0.01:${this.options.port.toString()}`]);
         } else if (this.dev === false) {
-          const browserSync = require('browser-sync');
-          browserSync.init({
+          const bs = require('browser-sync').create();
+
+          if (this.watch) {
+            bs.watch('*.js').on('change', bs.reload);
+          }
+
+          bs.watch(_this.outputPath + '/**/*.js', (event, file) => {
+            if (event === "change") {
+              bs.reload();
+            }
+          });
+
+          bs.init({
             server: {
               baseDir: this.outputPath
             },

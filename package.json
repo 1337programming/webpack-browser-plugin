@@ -23,10 +23,10 @@
     "html-loader": "^0.4.3",
     "rollup": "^0.25.8",
     "rollup-plugin-babel": "^2.4.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1"
   },
   "dependencies": {
-    "browser-sync": "^2.12.3",
-    "open": "0.0.5"
+    "browser-sync": "^2.13.0"
   }
 }

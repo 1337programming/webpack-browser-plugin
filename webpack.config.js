@@ -1,12 +1,16 @@
 const path = require('path');
+const webpack = require('webpack');
+
 var WebpackBrowserPlugin = require('./lib');
 
 module.exports = {
-  context: __dirname,
   entry: path.resolve(__dirname, 'test/entry.js'),
   output: {
     path: path.resolve(__dirname, 'test'),
     filename: 'bundle.js'
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'test')
   },
   module: {
     loaders: [
@@ -14,6 +18,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new WebpackBrowserPlugin()
+    new WebpackBrowserPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };

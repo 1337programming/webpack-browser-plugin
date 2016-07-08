@@ -46,6 +46,7 @@
 
 	__webpack_require__(1);
 	document.write(__webpack_require__(5));
+	console.log('Hello');
 
 /***/ },
 /* 1 */
@@ -82,7 +83,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, "body {\n    background: slategrey;\n    color: blueviolet;\n}", ""]);
 
 	// exports
 
@@ -399,7 +400,7 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = "It works from content.js.";
+	module.exports = 'This is my content.js.';
 
 /***/ }
 /******/ ]);
