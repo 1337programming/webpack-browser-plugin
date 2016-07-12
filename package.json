@@ -27,6 +27,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "browser-sync": "^2.13.0"
+    "browser-sync": "^2.13.0",
+    "opn": "^4.0.2"
   }
 }

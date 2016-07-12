@@ -50,12 +50,10 @@ export default class WebpackBrowserPlugin {
     compiler.plugin('done', (compilation) => {
       if (this.firstRun) {
         if (this.dev === true) {
-          var spawn = require('child_process').spawn;
-          var url = this.options.url;
-          if (this.options.port) {
-            url = `${this.options.url}:${this.options.port.toString()}`;
-          }
-          spawn('open', [url]);
+          const open = require('opn');
+          const url = this.options.port ? `${this.options.url}:${this.options.port.toString()}` : this.options.url;
+          const browser = this.options.browser;
+          open(url, { app: browser });
         } else if (this.dev === false) {
           const bs = require('browser-sync').create();
 
