@@ -1,5 +1,5 @@
 function mergeOptions(options, defaults) {
-  for (var key in defaults) {
+  for (let key in defaults) {
     if (options.hasOwnProperty(key)) {
       defaults[key] = options[key];
     }
@@ -7,13 +7,16 @@ function mergeOptions(options, defaults) {
   return defaults;
 }
 
+import OsBrowsers from './os-browsers.json';
+
 export default class WebpackBrowserPlugin {
 
   constructor(options) {
     const defaultOptions = {
       port: 8080,
       browser: 'default',
-      url: 'http://127.0.0.1'
+      url: 'http://127.0.0.1',
+      openOptions: null
     };
     if (options) {
       this.options = mergeOptions(options, defaultOptions);
@@ -24,6 +27,23 @@ export default class WebpackBrowserPlugin {
     this.watch = false;
     this.dev = null;
     this.outputPath = null;
+  }
+
+  browserStr(browser) {
+    let valid = false;
+    if (browser.indexOf('google') > -1 || browser.indexOf('chrome') > -1) {
+      if (OsBrowsers[os.process()].google) {
+        browser = OsBrowsers[os.process()].google.app;
+        valid = true;
+      }
+    }
+    if (browser.indexOf('fire') > -1 || browser.indexOf('fox') > -1) {
+      if (OsBrowsers[os.process()].firefox) {
+        browser = OsBrowsers[os.process()].firefox.app;
+        valid = true;
+      }
+    }
+    return {browser: browser, valid: valid};
   }
 
   apply(compiler) {
@@ -52,8 +72,19 @@ export default class WebpackBrowserPlugin {
         if (this.dev === true) {
           const open = require('opn');
           const url = this.options.port ? `${this.options.url}:${this.options.port.toString()}` : this.options.url;
-          const browser = this.options.browser;
-          open(url, { app: browser });
+          let results = this.browserStr(this.options.browser);
+          if (this.options.openOptions) {
+            open(url, this.options.openOptions);
+          } else {
+            if (results.valid) {
+              open(url, { app: results.browser });
+            } else {
+              open(url);
+              if (results.browser !== 'default') {
+                console.log(`Given browser params: '${this.options.browser}' were not valid or available. Default browser opened.`);
+              }
+            }
+          }
         } else if (this.dev === false) {
           const bs = require('browser-sync').create();
 

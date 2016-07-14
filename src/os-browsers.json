@@ -1,0 +1,27 @@
+{
+  "aix": {},
+  "darwin": {
+    "google": {
+      "app": "google chrome"
+    },
+    "firefox": {
+      "app": "firefox"
+    }
+  },
+  "freebsd": {},
+  "linux": {
+    "google": {
+      "app": "google-chrome"
+    }
+  },
+  "openbsd": {},
+  "sunos": {},
+  "win32": {
+    "google": {
+      "app": "chrome"
+    },
+    "firefox": {
+      "app": "firefox"
+    }
+  }
+}

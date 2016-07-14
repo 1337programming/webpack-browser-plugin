@@ -77,3 +77,13 @@ Also checkout our other webpack plugin [WebpackShellPlugin](https://github.com/1
 * `port`: Port to run on. **Default: 8080 <number>**
 * `browser`: Browser to use. Note: webpack-dev-server will open your default browser. **Default: default <string|array>**
 * `url`: Url to use. **Default: http://127.0.0.1 or http://localhost <string>**
+
+**Webpack-dev-server** only
+* `openOptions`: For webpack-dev-server, we use node module [opn](https://github.com/sindresorhus/opn). This will override this plugins options.
+
+### Contributing
+Create a new branch and write your changes in the `src/` folder.
+
+Make sure you run your tests with both `webpack` and `webpack-dev-server`.
+
+Once complete run `npm run build` and create your pull request.

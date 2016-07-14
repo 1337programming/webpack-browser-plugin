@@ -23,6 +23,7 @@
     "html-loader": "^0.4.3",
     "rollup": "^0.25.8",
     "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-json": "^2.0.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1"
   },
