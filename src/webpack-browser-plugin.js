@@ -30,6 +30,7 @@ export default class WebpackBrowserPlugin {
   }
 
   browserStr(browser) {
+    browser = browser.toLowerCase();
     let valid = false;
     if (browser.indexOf('google') > -1 || browser.indexOf('chrome') > -1) {
       if (OsBrowsers[os.process()].google) {
