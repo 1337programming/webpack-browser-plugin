@@ -1,3 +1,5 @@
+import os from 'os';
+
 function mergeOptions(options, defaults) {
   for (let key in defaults) {
     if (options.hasOwnProperty(key)) {
@@ -33,14 +35,14 @@ export default class WebpackBrowserPlugin {
     browser = browser.toLowerCase();
     let valid = false;
     if (browser.indexOf('google') > -1 || browser.indexOf('chrome') > -1) {
-      if (OsBrowsers[os.process()].google) {
-        browser = OsBrowsers[os.process()].google.app;
+      if (OsBrowsers[os.platform()].google) {
+        browser = OsBrowsers[os.platform()].google.app;
         valid = true;
       }
     }
     if (browser.indexOf('fire') > -1 || browser.indexOf('fox') > -1) {
-      if (OsBrowsers[os.process()].firefox) {
-        browser = OsBrowsers[os.process()].firefox.app;
+      if (OsBrowsers[os.platform()].firefox) {
+        browser = OsBrowsers[os.platform()].firefox.app;
         valid = true;
       }
     }
