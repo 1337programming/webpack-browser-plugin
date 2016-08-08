@@ -18,6 +18,8 @@ export default class WebpackBrowserPlugin {
       port: 8080,
       browser: 'default',
       url: 'http://127.0.0.1',
+      publicPath: '',
+      allowPublicPath: false,
       openOptions: null
     };
     if (options) {
@@ -49,7 +51,12 @@ export default class WebpackBrowserPlugin {
     return {browser: browser, valid: valid};
   }
 
+
+
   apply(compiler) {
+    if (compiler.options.output.publicPath) {
+      this.options.publicPath = WebpackBrowserPlugin.cleanPublicPath(compiler.options.output.publicPath);
+    }
     if (compiler.options.port) {
       this.options.port = compiler.options.port;
     } else if (compiler.options.devServer) {
@@ -67,6 +74,7 @@ export default class WebpackBrowserPlugin {
       } else {
         this.dev = false;
         this.outputPath = compilation.compiler.outputPath;
+        console.log('outputPath',this.outputPath);
       }
     });
 
@@ -74,7 +82,7 @@ export default class WebpackBrowserPlugin {
       if (this.firstRun) {
         if (this.dev === true) {
           const open = require('opn');
-          const url = this.options.port ? `${this.options.url}:${this.options.port.toString()}` : this.options.url;
+          const url = `${this.options.url}:${this.options.port.toString()}/${this.options.publicPath}`;
           let results = this.browserStr(this.options.browser);
           if (this.options.openOptions) {
             open(url, this.options.openOptions);
@@ -98,15 +106,7 @@ export default class WebpackBrowserPlugin {
               }
             });
           }
-
-          bs.init({
-            server: {
-              baseDir: this.outputPath
-            },
-            browser: this.options.browser,
-            port: this.options.port,
-            open: "external"
-          });
+          bs.init(this.buildBSServer());
         } else {
           console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');
         }
@@ -114,4 +114,33 @@ export default class WebpackBrowserPlugin {
       }
     });
   }
+
+  buildBSServer() {
+    let server = [this.outputPath];
+    if (this.options.publicPath && this.options.publicPath !== '') {
+      server.push(`${this.outputPath}/${this.options.publicPath}`);
+    }
+    let bsOptions = {
+      server: server,
+      browser: this.options.browser,
+      port: this.options.port,
+      open: "external"
+    };
+    if (this.options.publicPath && this.options.allowPublicPath) {
+      bsOptions.startPath = this.options.publicPath
+    }
+    return bsOptions;
+  }
+
+  static cleanPublicPath(str) {
+    let arr = str.split('');
+    if (arr[0] === '/') {
+      arr.splice(0, 1);
+    }
+    if (arr[arr.length - 1] === '/') {
+      arr.splice(arr.length - 1, 1);
+    }
+    return arr.join('');
+  }
+
 }
