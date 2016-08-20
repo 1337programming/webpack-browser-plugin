@@ -72,7 +72,7 @@ export default class WebpackBrowserPlugin {
       } else {
         this.dev = false;
         this.outputPath = compilation.compiler.outputPath;
-        console.log('outputPath',this.outputPath);
+        console.log('outputPath', this.outputPath);
       }
     });
 
@@ -86,7 +86,7 @@ export default class WebpackBrowserPlugin {
             open(url, this.options.openOptions);
           } else {
             if (results.valid) {
-              open(url, { app: results.browser });
+              open(url, {app: results.browser});
             } else {
               open(url);
               if (results.browser !== 'default') {
