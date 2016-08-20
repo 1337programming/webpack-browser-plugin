@@ -51,8 +51,6 @@ export default class WebpackBrowserPlugin {
     return {browser: browser, valid: valid};
   }
 
-
-
   apply(compiler) {
     if (compiler.options.output.publicPath) {
       this.options.publicPath = WebpackBrowserPlugin.cleanPublicPath(compiler.options.output.publicPath);
