@@ -51,6 +51,15 @@ export default class WebpackBrowserPlugin {
     return {browser: browser, valid: valid};
   }
 
+  buildUrl(options) {
+    if ( !!~options.url.indexOf('${port}') ) {
+      let url = options.url.replace('${port}', `:${options.port}`);
+      return `${url}/${this.options.publicPath}`;
+    } else {
+      return `${options.url}:${options.port.toString()}/${this.options.publicPath}`;
+    }
+  }
+
   apply(compiler) {
     if (compiler.options.output.publicPath) {
       this.options.publicPath = WebpackBrowserPlugin.cleanPublicPath(compiler.options.output.publicPath);
@@ -80,7 +89,7 @@ export default class WebpackBrowserPlugin {
       if (this.firstRun) {
         if (this.dev === true) {
           const open = require('opn');
-          const url = `${this.options.url}:${this.options.port.toString()}/${this.options.publicPath}`;
+          const url = this.buildUrl(this.options);
           let results = this.browserStr(this.options.browser);
           if (this.options.openOptions) {
             open(url, this.options.openOptions);

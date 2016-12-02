@@ -1,13 +1,14 @@
 {
   "name": "webpack-browser-plugin",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "description": "Launch a browser after webpack-dev-server completes building",
   "main": "lib/index.js",
   "scripts": {
-    "pretest": "npm run build",
     "test": "webpack",
-    "test-dev": "npm run build && webpack-dev-server",
-    "build": "rollup -c"
+    "test:dev": "webpack-dev-server --progress",
+    "build": "rollup -c",
+    "webpack": "webpack --progress",
+    "webpack-dev-server": "webpack-dev-server --progress"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,8 @@
     "rollup-plugin-babel": "^2.4.0",
     "rollup-plugin-json": "^2.0.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
     "browser-sync": "^2.13.0",
