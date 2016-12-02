@@ -130,7 +130,7 @@ export default class WebpackBrowserPlugin {
       server: server,
       browser: this.options.browser,
       port: this.options.port,
-      open: "external"
+      open: 'internal'
     };
     if (this.options.publicPath) {
       bsOptions.startPath = this.options.publicPath
