@@ -49,6 +49,14 @@ export default class WebpackBrowserPlugin {
     return {browser: browser, valid: valid};
   }
 
+  buildUrl(options) {
+    if ( !!~options.url.indexOf('${port}') ) {
+      return options.url.replace('${port}', `:${options.port}`);
+    } else {
+      return `${options.url}:${options.port.toString()}`;
+    }
+  }
+
   apply(compiler) {
     if (compiler.options.port) {
       this.options.port = compiler.options.port;
@@ -74,7 +82,7 @@ export default class WebpackBrowserPlugin {
       if (this.firstRun) {
         if (this.dev === true) {
           const open = require('opn');
-          const url = this.options.port ? `${this.options.url}:${this.options.port.toString()}` : this.options.url;
+          const url = this.buildUrl(this.options);
           let results = this.browserStr(this.options.browser);
           if (this.options.openOptions) {
             open(url, this.options.openOptions);

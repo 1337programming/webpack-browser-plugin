@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "webpack": "webpack --progress",
+    "webpack-dev-server": "webpack-dev-server --progress"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,8 @@
     "rollup-plugin-babel": "^2.4.0",
     "rollup-plugin-json": "^2.0.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
     "browser-sync": "^2.13.0",
