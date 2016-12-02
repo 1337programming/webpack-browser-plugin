@@ -4,10 +4,12 @@ const webpack = require('webpack');
 var WebpackBrowserPlugin = require('./lib');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'test/entry.js'),
+  entry: path.resolve(__dirname, 'test/assets/entry.js'),
   output: {
     path: path.resolve(__dirname, 'test'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/assets/'
+
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'test')

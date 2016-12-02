@@ -4,7 +4,8 @@
   "description": "Launch a browser after webpack-dev-server completes building",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "webpack",
+    "test:dev": "webpack-dev-server --progress",
     "build": "rollup -c",
     "webpack": "webpack --progress",
     "webpack-dev-server": "webpack-dev-server --progress"
