@@ -19,7 +19,8 @@ export default class WebpackBrowserPlugin {
       browser: 'default',
       url: 'http://127.0.0.1',
       publicPath: '',
-      openOptions: null
+      openOptions: null,
+      bsOptions: null
     };
     if (options) {
       this.options = mergeOptions(options, defaultOptions);
@@ -130,10 +131,13 @@ export default class WebpackBrowserPlugin {
       server: server,
       browser: this.options.browser,
       port: this.options.port,
-      open: "external"
+      open: 'internal'
     };
     if (this.options.publicPath) {
       bsOptions.startPath = this.options.publicPath
+    }
+    if (this.options.bsOptions) {
+      bsOptions = this.options.bsOptions;
     }
     return bsOptions;
   }

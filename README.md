@@ -79,6 +79,7 @@ Also checkout our other webpack plugin [WebpackShellPlugin](https://github.com/1
 * `url`: Url to use. **Default: http://127.0.0.1 or http://localhost <string>**
 * `publicPath`: Public url path. **Default: null**
 * `openOptions`: Options to pass to the opn module **Default: null**
+* `bsOptions`: Options to pass to the browser-sync module **Default: null**
 
 **Webpack-dev-server** only
 * `openOptions`: For webpack-dev-server, we use node module [opn](https://github.com/sindresorhus/opn). This will override this plugins options.
