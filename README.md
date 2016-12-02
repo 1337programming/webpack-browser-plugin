@@ -78,11 +78,12 @@ Also checkout our other webpack plugin [WebpackShellPlugin](https://github.com/1
 * `browser`: Browser to use. Note: webpack-dev-server will open your default browser. **Default: default <string|array>**
 * `url`: Url to use. **Default: http://127.0.0.1 or http://localhost <string>**
 * `publicPath`: Public url path. **Default: null**
-* `openOptions`: Options to pass to the opn module **Default: null**
-* `bsOptions`: Options to pass to the browser-sync module **Default: null**
 
 **Webpack-dev-server** only
 * `openOptions`: For webpack-dev-server, we use node module [opn](https://github.com/sindresorhus/opn). This will override this plugins options.
+
+**Webpack** only
+* `bsOptions`: Options to pass to the browser-sync module **Default: null**
 
 ### Contributing
 Create a new branch and write your changes in the `src/` folder.
