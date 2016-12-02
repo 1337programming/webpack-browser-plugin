@@ -52,7 +52,7 @@ export default class WebpackBrowserPlugin {
   }
 
   buildUrl(options) {
-    if ( !!~options.url.indexOf('${port}') ) {
+    if (!!~options.url.indexOf('${port}')) {
       let url = options.url.replace('${port}', `:${options.port}`);
       return `${url}/${this.options.publicPath}`;
     } else {
