@@ -19,7 +19,6 @@ export default class WebpackBrowserPlugin {
       browser: 'default',
       url: 'http://127.0.0.1',
       publicPath: '',
-      allowPublicPath: false,
       openOptions: null
     };
     if (options) {
@@ -133,7 +132,7 @@ export default class WebpackBrowserPlugin {
       port: this.options.port,
       open: "external"
     };
-    if (this.options.publicPath && this.options.allowPublicPath) {
+    if (this.options.publicPath) {
       bsOptions.startPath = this.options.publicPath
     }
     return bsOptions;
