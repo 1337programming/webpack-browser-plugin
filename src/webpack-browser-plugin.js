@@ -1,7 +1,56 @@
-import os from 'os';
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var os = _interopDefault(require('os'));
+
+var babelHelpers = {};
+
+babelHelpers.classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+babelHelpers.createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+babelHelpers;
+
+var aix = {};
+var darwin = { "google": { "app": "google chrome" }, "firefox": { "app": "firefox" } };
+var freebsd = {};
+var linux = { "google": { "app": "google-chrome" } };
+var openbsd = {};
+var sunos = {};
+var win32 = { "google": { "app": "chrome" }, "firefox": { "app": "firefox" } };
+var OsBrowsers = {
+	aix: aix,
+	darwin: darwin,
+	freebsd: freebsd,
+	linux: linux,
+	openbsd: openbsd,
+	sunos: sunos,
+	win32: win32
+};
 
 function mergeOptions(options, defaults) {
-  for (let key in defaults) {
+  for (var key in defaults) {
     if (options.hasOwnProperty(key)) {
       defaults[key] = options[key];
     }
@@ -9,12 +58,11 @@ function mergeOptions(options, defaults) {
   return defaults;
 }
 
-import OsBrowsers from './os-browsers.json';
+var WebpackBrowserPlugin = function () {
+  function WebpackBrowserPlugin(options) {
+    babelHelpers.classCallCheck(this, WebpackBrowserPlugin);
 
-export default class WebpackBrowserPlugin {
-
-  constructor(options) {
-    const defaultOptions = {
+    var defaultOptions = {
       port: 8080,
       browser: 'default',
       url: 'http://127.0.0.1',
@@ -33,124 +81,137 @@ export default class WebpackBrowserPlugin {
     this.outputPath = null;
   }
 
-  browserStr(browser) {
-    browser = browser.toLowerCase();
-    let valid = false;
-    if (browser.indexOf('google') > -1 || browser.indexOf('chrome') > -1) {
-      if (OsBrowsers[os.platform()].google) {
-        browser = OsBrowsers[os.platform()].google.app;
-        valid = true;
+  babelHelpers.createClass(WebpackBrowserPlugin, [{
+    key: 'browserStr',
+    value: function browserStr(browser) {
+      browser = browser.toLowerCase();
+      var valid = false;
+      if (browser.indexOf('google') > -1 || browser.indexOf('chrome') > -1) {
+        if (OsBrowsers[os.platform()].google) {
+          browser = OsBrowsers[os.platform()].google.app;
+          valid = true;
+        }
       }
-    }
-    if (browser.indexOf('fire') > -1 || browser.indexOf('fox') > -1) {
-      if (OsBrowsers[os.platform()].firefox) {
-        browser = OsBrowsers[os.platform()].firefox.app;
-        valid = true;
+      if (browser.indexOf('fire') > -1 || browser.indexOf('fox') > -1) {
+        if (OsBrowsers[os.platform()].firefox) {
+          browser = OsBrowsers[os.platform()].firefox.app;
+          valid = true;
+        }
       }
+      return { browser: browser, valid: valid };
     }
-    return {browser: browser, valid: valid};
-  }
-
-  buildUrl(options) {
-    if (!!~options.url.indexOf('${port}')) {
-      let url = options.url.replace('${port}', `:${options.port}`);
-      return `${url}/${this.options.publicPath}`;
-    } else {
-      return `${options.url}:${options.port.toString()}/${this.options.publicPath}`;
-    }
-  }
-
-  apply(compiler) {
-    if (compiler.options.output.publicPath) {
-      this.options.publicPath = WebpackBrowserPlugin.cleanPublicPath(compiler.options.output.publicPath);
-    }
-    if (compiler.options.port) {
-      this.options.port = compiler.options.port;
-    } else if (compiler.options.devServer) {
-      if (compiler.options.devServer.port) {
-        this.options.port = compiler.options.devServer.port;
-      }
-    }
-
-    compiler.plugin('compilation', (compilation) => {
-      if (compilation.options.watch) {
-        this.watch = true;
-      }
-      if (compilation.compiler._plugins['watch-run']) {
-        this.dev = true;
+  }, {
+    key: 'buildUrl',
+    value: function buildUrl(options) {
+      if (!! ~options.url.indexOf('${port}')) {
+        var url = options.url.replace('${port}', ':' + options.port);
+        return url + '/';
       } else {
-        this.dev = false;
-        this.outputPath = compilation.compiler.outputPath;
-        console.log('outputPath', this.outputPath);
+        return options.url + ':' + options.port.toString() + '/';
       }
-    });
+    }
+  }, {
+    key: 'apply',
+    value: function apply(compiler) {
+      var _this = this;
 
-    compiler.plugin('done', (compilation) => {
-      if (this.firstRun) {
-        if (this.dev === true) {
-          const open = require('opn');
-          const url = this.buildUrl(this.options);
-          let results = this.browserStr(this.options.browser);
-          if (this.options.openOptions) {
-            open(url, this.options.openOptions);
-          } else {
-            if (results.valid) {
-              open(url, {app: results.browser});
+      if (compiler.options.output.publicPath) {
+        this.options.publicPath = WebpackBrowserPlugin.cleanPublicPath(compiler.options.output.publicPath);
+      }
+      if (compiler.options.port) {
+        this.options.port = compiler.options.port;
+      } else if (compiler.options.devServer) {
+        if (compiler.options.devServer.port) {
+          this.options.port = compiler.options.devServer.port;
+        }
+      }
+
+      compiler.plugin('compilation', function (compilation) {
+        if (compilation.options.watch) {
+          _this.watch = true;
+        }
+        if (compilation.compiler._plugins['watch-run']) {
+          _this.dev = true;
+        } else {
+          _this.dev = false;
+          _this.outputPath = compilation.compiler.outputPath;
+          console.log('outputPath', _this.outputPath);
+        }
+      });
+
+      compiler.plugin('done', function (compilation) {
+        if (_this.firstRun) {
+          if (_this.dev === true) {
+            var open = require('opn');
+            var url = _this.buildUrl(_this.options);
+            var results = _this.browserStr(_this.options.browser);
+            if (_this.options.openOptions) {
+              open(url, _this.options.openOptions);
             } else {
-              open(url);
-              if (results.browser !== 'default') {
-                console.log(`Given browser params: '${this.options.browser}' were not valid or available. Default browser opened.`);
+              if (results.valid) {
+                open(url, { app: results.browser });
+              } else {
+                open(url);
+                if (results.browser !== 'default') {
+                  console.log('Given browser params: \'' + _this.options.browser + '\' were not valid or available. Default browser opened.');
+                }
               }
             }
-          }
-        } else if (this.dev === false) {
-          const bs = require('browser-sync').create();
+          } else if (_this.dev === false) {
+            (function () {
+              var bs = require('browser-sync').create();
 
-          if (this.watch) {
-            bs.watch(this.outputPath + '/**/*.js', (event, file) => {
-              if (event === "change") {
-                bs.reload();
+              if (_this.watch) {
+                bs.watch(_this.outputPath + '/**/*.js', function (event, file) {
+                  if (event === "change") {
+                    bs.reload();
+                  }
+                });
               }
-            });
+              bs.init(_this.buildBSServer());
+            })();
+          } else {
+            console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');
           }
-          bs.init(this.buildBSServer());
-        } else {
-          console.log('Failed Plugin: Webpack-Broswer-Plugin, incorrect params found.');
+          _this.firstRun = false;
         }
-        this.firstRun = false;
+      });
+    }
+  }, {
+    key: 'buildBSServer',
+    value: function buildBSServer() {
+      var server = [this.outputPath];
+      if (this.options.publicPath && this.options.publicPath !== '') {
+        server.push(this.outputPath + '/' + this.options.publicPath);
       }
-    });
-  }
+      var bsOptions = {
+        server: server,
+        browser: this.options.browser,
+        port: this.options.port,
+        open: 'internal'
+      };
+      if (this.options.publicPath) {
+        bsOptions.startPath = this.options.publicPath;
+      }
+      if (this.options.bsOptions) {
+        bsOptions = this.options.bsOptions;
+      }
+      return bsOptions;
+    }
+  }], [{
+    key: 'cleanPublicPath',
+    value: function cleanPublicPath(str) {
+      var arr = str.split('');
+      if (arr[0] === '/') {
+        arr.splice(0, 1);
+      }
+      if (arr[arr.length - 1] === '/') {
+        arr.splice(arr.length - 1, 1);
+      }
+      return arr.join('');
+    }
+  }]);
+  return WebpackBrowserPlugin;
+}();
 
-  buildBSServer() {
-    let server = [this.outputPath];
-    if (this.options.publicPath && this.options.publicPath !== '') {
-      server.push(`${this.outputPath}/${this.options.publicPath}`);
-    }
-    let bsOptions = {
-      server: server,
-      browser: this.options.browser,
-      port: this.options.port,
-      open: 'internal'
-    };
-    if (this.options.publicPath) {
-      bsOptions.startPath = this.options.publicPath
-    }
-    if (this.options.bsOptions) {
-      bsOptions = this.options.bsOptions;
-    }
-    return bsOptions;
-  }
-
-  static cleanPublicPath(str) {
-    let arr = str.split('');
-    if (arr[0] === '/') {
-      arr.splice(0, 1);
-    }
-    if (arr[arr.length - 1] === '/') {
-      arr.splice(arr.length - 1, 1);
-    }
-    return arr.join('');
-  }
-
-}
+module.exports = WebpackBrowserPlugin;
