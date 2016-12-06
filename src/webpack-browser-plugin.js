@@ -56,7 +56,7 @@ export default class WebpackBrowserPlugin {
       let url = options.url.replace('${port}', `:${options.port}`);
       return `${url}/${this.options.publicPath}`;
     } else {
-      return `${options.url}:${options.port.toString()}/${this.options.publicPath}`;
+      return options.url + (options.port ? ':' + options.port.toString() : '') + '/' + this.options.publicPath;
     }
   }
 
