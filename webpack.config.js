@@ -15,11 +15,18 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.css$/, loader: 'style!css' }
+      {test: /\.css$/, loader: 'style!css'}
     ]
   },
   plugins: [
-    new WebpackBrowserPlugin(),
+    new WebpackBrowserPlugin({
+      port: 8080,
+      browser: 'default',
+      url: 'http://127.0.0.1',
+      publicPath: '',
+      openOptions: null,
+      bsOptions: null
+    }),
     new webpack.HotModuleReplacementPlugin()
   ]
 };
