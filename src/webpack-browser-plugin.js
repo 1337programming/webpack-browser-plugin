@@ -1,17 +1,19 @@
 import os from 'os';
 
-function mergeOptions(options, defaults) {
-  for (let key in defaults) {
-    if (options.hasOwnProperty(key)) {
-      defaults[key] = options[key];
-    }
-  }
-  return defaults;
-}
-
 import OsBrowsers from './os-browsers.json';
 
 export default class WebpackBrowserPlugin {
+
+  static cleanPublicPath(str) {
+    let arr = str.split('');
+    if (arr[0] === '/') {
+      arr.splice(0, 1);
+    }
+    if (arr[arr.length - 1] === '/') {
+      arr.splice(arr.length - 1, 1);
+    }
+    return arr.join('');
+  }
 
   constructor(options) {
     const defaultOptions = {
@@ -23,7 +25,7 @@ export default class WebpackBrowserPlugin {
       bsOptions: null
     };
     if (options) {
-      this.options = mergeOptions(options, defaultOptions);
+      this.options = this.mergeOptions(options, defaultOptions);
     } else {
       this.options = defaultOptions;
     }
@@ -31,6 +33,15 @@ export default class WebpackBrowserPlugin {
     this.watch = false;
     this.dev = null;
     this.outputPath = null;
+  }
+
+  mergeOptions(options, defaults) {
+    for (let key in defaults) {
+      if (options.hasOwnProperty(key)) {
+        defaults[key] = options[key];
+      }
+    }
+    return defaults;
   }
 
   browserStr(browser) {
@@ -140,17 +151,6 @@ export default class WebpackBrowserPlugin {
       bsOptions = this.options.bsOptions;
     }
     return bsOptions;
-  }
-
-  static cleanPublicPath(str) {
-    let arr = str.split('');
-    if (arr[0] === '/') {
-      arr.splice(0, 1);
-    }
-    if (arr[arr.length - 1] === '/') {
-      arr.splice(arr.length - 1, 1);
-    }
-    return arr.join('');
   }
 
 }
