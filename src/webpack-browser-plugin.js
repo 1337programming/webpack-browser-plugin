@@ -19,7 +19,7 @@ export default class WebpackBrowserPlugin {
     const defaultOptions = {
       port: 8080,
       browser: 'default',
-      url: 'http://127.0.0.1',
+      url: null,
       publicPath: '',
       proxy: null,
       openOptions: null,
@@ -64,13 +64,21 @@ export default class WebpackBrowserPlugin {
   }
 
   buildUrl(options) {
-    if (!!~options.url.indexOf('${port}')) {
-      let url = options.url.replace('${port}', `:${options.port}`);
-      return `${url}/${this.options.publicPath}`;
-    } else if (options.port) {
-      return `${options.url}:${options.port.toString()}/${this.options.publicPath}`;
+    let url = options.url;
+    if (this.options.url) {
+      url = this.options.url;
+      if (this.options.publicPath) {
+        return `${url}/${this.options.publicPath}`;
+      }
     } else {
-      return `${options.url}/${this.options.publicPath}`;
+      if (!!~options.url.indexOf('${port}')) {
+        let url = options.url.replace('${port}', `:${options.port}`);
+        return `${url}/${this.options.publicPath}`;
+      } else if (options.port) {
+        return `${options.url}:${options.port.toString()}/${this.options.publicPath}`;
+      } else {
+        return `${options.url}/${this.options.publicPath}`;
+      }
     }
   }
 
@@ -144,7 +152,7 @@ export default class WebpackBrowserPlugin {
     let bsOptions = {};
     if (this.options.bsOptions) {
       bsOptions = this.options.bsOptions;
-    } else {
+    }  else {
       bsOptions.server = server;
       bsOptions.browser = this.options.browser;
       bsOptions.open = 'internal';
@@ -155,6 +163,8 @@ export default class WebpackBrowserPlugin {
         bsOptions.port = this.options.port;
       }
     }
+
+    console.log(bsOptions);
 
     return bsOptions;
   }

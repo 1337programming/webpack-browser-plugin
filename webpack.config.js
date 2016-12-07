@@ -20,10 +20,10 @@ module.exports = {
   },
   plugins: [
     new WebpackBrowserPlugin({
-      port: 8080,
+      port: null,
+      publicPath: '/',
       browser: 'default',
-      url: 'http://127.0.0.1',
-      publicPath: '',
+      url: 'localhost:8080',
       openOptions: null,
       bsOptions: null
     }),
