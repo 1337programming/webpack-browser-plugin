@@ -1,6 +1,6 @@
 {
   "name": "webpack-browser-plugin",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Launch a browser after webpack-dev-server completes building",
   "main": "lib/index.js",
   "scripts": {
